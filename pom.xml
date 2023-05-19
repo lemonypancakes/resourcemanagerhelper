@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ ResourceManagerHelper - Gives access to minecraft's resource manager
+  ~ Copyright (C) 2023 Teofilo Jr. V. Daquipil (LemonyPancakes) <jiboyjune@gmail.com>
+  ~ Copyright (C) 2023 Contributors
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>me.lemonypancakes.resourcemanagerhelper</groupId>
+    <artifactId>resourcemanagerhelper</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>ResourceManagerHelper</name>
+    <url>https://github.com/lemonypancakes/resourcemanagerhelper</url>
+    <inceptionYear>2023</inceptionYear>
+    <licenses>
+        <license>
+            <name>GNU General Public License, Version 3.0</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A copyleft license that ensures software freedom</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>lemonypancakes</id>
+            <name>Teofilo Jr. V. Daquipil</name>
+            <url>https://www.lemonypancakes.me</url>
+            <email>jiboyjune@gmail.com</email>
+            <roles>
+                <role>developer</role>
+                <role>maintainer</role>
+            </roles>
+            <timezone>Asia/Manila</timezone>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>resourcemanagerhelper-core</module>
+        <module>resourcemanagerhelper-nms</module>
+        <module>resourcemanagerhelper-shade</module>
+    </modules>
+
+    <scm>
+        <connection>scm:git:git://github.com/lemonypancakes/resourcemanagerhelper.git</connection>
+        <developerConnection>scm:git:ssh://github.com:lemonypancakes/resourcemanagerhelper.git</developerConnection>
+        <url>https://github.com/lemonypancakes/resourcemanagerhelper/tree/master</url>
+    </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.15.0</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
