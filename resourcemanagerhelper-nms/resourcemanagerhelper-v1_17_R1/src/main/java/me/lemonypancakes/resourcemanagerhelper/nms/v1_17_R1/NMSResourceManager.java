@@ -1,5 +1,5 @@
 /*
- * ResourceManagerHelper - Gives access to minecraft's resource manager
+ * ResourceManagerHelper - Gives access to minecraft's resource manager.
  * Copyright (C) 2023 Teofilo Jr. V. Daquipil (LemonyPancakes) <jiboyjune@gmail.com>
  * Copyright (C) 2023 Contributors
  *
