@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="resourcemanagerhelper [clean,deploy]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+  <configuration default="false" name="resourcemanagerhelper [clean,deploy...]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -12,6 +12,7 @@
             <list>
               <option value="clean" />
               <option value="deploy" />
+              <option value="-Pci-cd" />
             </list>
           </option>
           <option name="pomFileName" />
