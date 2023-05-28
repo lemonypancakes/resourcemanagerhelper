@@ -29,6 +29,7 @@
     <packaging>pom</packaging>
 
     <name>ResourceManagerHelper</name>
+    <description>Gives access to minecraft's resource manager.</description>
     <url>https://github.com/lemonypancakes/resourcemanagerhelper</url>
     <inceptionYear>2023</inceptionYear>
 
