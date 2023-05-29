@@ -26,7 +26,7 @@
     <parent>
         <groupId>me.lemonypancakes.resourcemanagerhelper</groupId>
         <artifactId>resourcemanagerhelper</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
 
     <artifactId>resourcemanagerhelper-shade</artifactId>
@@ -102,31 +102,21 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
 
                 <executions>
                     <execution>
+                        <id>empty-javadoc-jar</id>
                         <phase>package</phase>
 
                         <goals>
-                            <goal>shade</goal>
+                            <goal>jar</goal>
                         </goals>
 
                         <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <shadedClassifierName>sources</shadedClassifierName>
-
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-
-                                    <includes>
-                                        <include>**/*.java</include>
-                                    </includes>
-                                </filter>
-                            </filters>
+                            <classifier>javadoc</classifier>
+                            <classesDirectory>${basedir}/javadoc</classesDirectory>
                         </configuration>
                     </execution>
                 </executions>
