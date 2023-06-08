@@ -12,7 +12,7 @@
             <list>
               <option value="clean" />
               <option value="deploy" />
-              <option value="-Pci-cd" />
+              <option value="-Pci-cd,deploy-to-central" />
             </list>
           </option>
           <option name="pomFileName" />

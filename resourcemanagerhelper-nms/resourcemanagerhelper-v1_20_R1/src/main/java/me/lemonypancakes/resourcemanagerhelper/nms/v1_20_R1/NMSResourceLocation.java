@@ -17,7 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.lemonypancakes.resourcemanagerhelper.nms.v1_19_R1;
+package me.lemonypancakes.resourcemanagerhelper.nms.v1_20_R1;
 
 import me.lemonypancakes.resourcemanagerhelper.ResourceLocation;
 
