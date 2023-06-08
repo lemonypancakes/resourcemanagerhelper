@@ -17,14 +17,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.lemonypancakes.resourcemanagerhelper.nms.v1_19_R3;
+package me.lemonypancakes.resourcemanagerhelper.nms.v1_20_R1;
 
 import me.lemonypancakes.resourcemanagerhelper.Resource;
 import me.lemonypancakes.resourcemanagerhelper.ResourceLocation;
 import me.lemonypancakes.resourcemanagerhelper.ResourceManager;
 import net.minecraft.server.dedicated.DedicatedServer;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_20_R1.CraftServer;
 
 import javax.annotation.Nonnull;
 import java.util.Map;

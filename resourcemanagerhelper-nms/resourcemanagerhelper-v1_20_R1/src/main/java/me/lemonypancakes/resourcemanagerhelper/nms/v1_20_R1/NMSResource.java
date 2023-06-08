@@ -17,44 +17,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.lemonypancakes.resourcemanagerhelper.nms.v1_19_R1;
+package me.lemonypancakes.resourcemanagerhelper.nms.v1_20_R1;
 
-import me.lemonypancakes.resourcemanagerhelper.ResourceLocation;
+import me.lemonypancakes.resourcemanagerhelper.Resource;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.io.InputStream;
 
-public class NMSResourceLocation implements ResourceLocation {
+public class NMSResource implements Resource {
     @Nonnull
-    private final net.minecraft.resources.ResourceLocation handle;
+    private final net.minecraft.server.packs.resources.Resource handle;
 
-    public NMSResourceLocation(@Nonnull net.minecraft.resources.ResourceLocation handle) {
+    public NMSResource(@Nonnull net.minecraft.server.packs.resources.Resource handle) {
         this.handle = handle;
     }
 
     @Nonnull
     @Override
-    public String getPath() {
-        return this.handle.getPath();
+    public String sourcePackId() {
+        return this.handle.sourcePackId();
     }
 
     @Nonnull
     @Override
-    public String getNamespace() {
-        return this.handle.getNamespace();
-    }
-
-    @Override
-    public String toString() {
-        return this.handle.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return 31 * this.handle.getNamespace().hashCode() + this.handle.getPath().hashCode();
+    public InputStream open() throws IOException {
+        return this.handle.open();
     }
 
     @Nonnull
-    public net.minecraft.resources.ResourceLocation getHandle() {
+    public net.minecraft.server.packs.resources.Resource getHandle() {
         return this.handle;
     }
 }

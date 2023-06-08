@@ -21,10 +21,14 @@ package me.lemonypancakes.resourcemanagerhelper;
 
 import org.bukkit.Bukkit;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public final class ResourceManagerHelper {
+    @Nullable
     private static ResourceManager resourceManager;
 
     static {
@@ -45,11 +49,13 @@ public final class ResourceManagerHelper {
     private ResourceManagerHelper() {
     }
 
+    @Nullable
     public static ResourceManager getResourceManager() {
         return resourceManager;
     }
 
-    public static Map<ResourceLocation, Resource> listResources(String resourceFolder, Predicate<ResourceLocation> resourceLocationPredicate) {
-        return resourceManager.listResources(resourceFolder, resourceLocationPredicate);
+    @Nonnull
+    public static Map<ResourceLocation, Resource> listResources(@Nonnull String resourceFolder, @Nonnull Predicate<ResourceLocation> resourceLocationPredicate) {
+        return resourceManager != null ? resourceManager.listResources(resourceFolder, resourceLocationPredicate) : new HashMap<>();
     }
 }
