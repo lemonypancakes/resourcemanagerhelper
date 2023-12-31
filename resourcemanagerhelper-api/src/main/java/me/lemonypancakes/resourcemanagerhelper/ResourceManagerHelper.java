@@ -17,7 +17,7 @@ public final class ResourceManagerHelper {
         String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
         try {
-            Class<?> clazz = Class.forName("me.lemonypancakes.resourcemanagerhelper.nms." + version + ".NMSResourceManager");
+            Class<?> clazz = Class.forName("me.lemonypancakes.resourcemanagerhelper.impl." + version + ".NMSResourceManager");
 
             if (ResourceManager.class.isAssignableFrom(clazz)) {
                 ResourceManagerHelper.resourceManager = (ResourceManager) clazz.getConstructor().newInstance();
