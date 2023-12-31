@@ -7,7 +7,6 @@ group = "me.lemonypancakes.resourcemanagerhelper"
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven("https://repo.codemc.io/repository/nms/")
     maven("https://libraries.minecraft.net/")
 }
