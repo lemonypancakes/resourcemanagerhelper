@@ -1,14 +1,5 @@
 plugins {
-    id("java")
     id("io.typecraft.gradlesource.spigot") version "1.0.0"
-}
-
-group = "me.lemonypancakes.resourcemanagerhelper"
-
-repositories {
-    mavenCentral()
-    maven("https://repo.codemc.io/repository/nms/")
-    maven("https://libraries.minecraft.net/")
 }
 
 dependencies {
