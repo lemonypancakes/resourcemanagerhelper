@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":resourcemanagerhelper-v1_20_R1"))
     implementation(project(":resourcemanagerhelper-v1_20_R2"))
     implementation(project(":resourcemanagerhelper-v1_20_R3"))
+    implementation(project(":resourcemanagerhelper-v1_21_R1"))
 }
 
 tasks {
@@ -63,7 +64,7 @@ allprojects {
                     name = "ResourceManagerHelper"
                     description = "Gives access to Minecraft's resource manager."
                     url = "https://github.com/lemonypancakes/resourcemanagerhelper"
-                    inceptionYear = "2023"
+                    inceptionYear = "2024"
                     packaging = "jar"
 
                     licenses {
@@ -84,7 +85,7 @@ allprojects {
                     developers {
                         developer {
                             id = "lemonypancakes"
-                            name = "Teofilo Jr. V. Daquipil"
+                            name = "Teofilo Jr. Daquipil"
                             url = "https://lemonypancakes.me"
                             email = "JiboyJUNE@gmail.com"
                             roles = listOf("developer", "maintainer")

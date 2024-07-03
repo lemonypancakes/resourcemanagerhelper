@@ -4,11 +4,11 @@ plugins {
 
 dependencies {
     compileOnly(project(":resourcemanagerhelper-api"))
-    compileOnly("org.spigotmc:spigot:1.20.2-R0.1-SNAPSHOT:remapped-mojang")
+    compileOnly("org.spigotmc:spigot:1.21-R0.1-SNAPSHOT:remapped-mojang")
 }
 
 spigotRemap {
-    spigotVersion.set("1.20.2")
+    spigotVersion.set("1.21")
     sourceJarTask.set(tasks.jar)
 }
 
