@@ -33,7 +33,7 @@ allprojects {
     apply(plugin = "signing")
 
     group = "me.lemonypancakes.resourcemanagerhelper"
-    version = "1.2.0"
+    version = "1.3.0"
 
     java {
         withSourcesJar()
@@ -64,7 +64,7 @@ allprojects {
                     name = "ResourceManagerHelper"
                     description = "Gives access to Minecraft's resource manager."
                     url = "https://github.com/lemonypancakes/resourcemanagerhelper"
-                    inceptionYear = "2024"
+                    inceptionYear = "2023"
                     packaging = "jar"
 
                     licenses {
@@ -87,7 +87,7 @@ allprojects {
                             id = "lemonypancakes"
                             name = "Teofilo Jr. Daquipil"
                             url = "https://lemonypancakes.me"
-                            email = "JiboyJUNE@gmail.com"
+                            email = "jiboyjune@gmail.com"
                             roles = listOf("developer", "maintainer")
                         }
                     }
