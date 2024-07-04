@@ -11,7 +11,3 @@ spigotRemap {
     spigotVersion.set("1.17.1")
     sourceJarTask.set(tasks.jar)
 }
-
-tasks.test {
-    useJUnitPlatform()
-}
