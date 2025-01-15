@@ -19,6 +19,8 @@ dependencies {
     implementation(project(":resourcemanagerhelper-v1_20_R2"))
     implementation(project(":resourcemanagerhelper-v1_20_R3"))
     implementation(project(":resourcemanagerhelper-v1_21_R1"))
+    implementation(project(":resourcemanagerhelper-v1_21_R2"))
+    implementation(project(":resourcemanagerhelper-v1_21_R3"))
 }
 
 tasks {

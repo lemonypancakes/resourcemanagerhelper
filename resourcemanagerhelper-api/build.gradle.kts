@@ -3,10 +3,10 @@ plugins {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot:1.20.4-R0.1-SNAPSHOT:remapped-mojang")
+    compileOnly("org.spigotmc:spigot:1.21.4-R0.1-SNAPSHOT:remapped-mojang")
 }
 
 spigotRemap {
-    spigotVersion.set("1.20.4")
+    spigotVersion.set("1.21.4")
     sourceJarTask.set(tasks.jar)
 }
