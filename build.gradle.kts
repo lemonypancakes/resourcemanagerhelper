@@ -35,7 +35,7 @@ allprojects {
     apply(plugin = "signing")
 
     group = "me.lemonypancakes.resourcemanagerhelper"
-    version = "1.3.0"
+    version = "1.4.0"
 
     java {
         withSourcesJar()
@@ -89,7 +89,7 @@ allprojects {
                             id = "lemonypancakes"
                             name = "Teofilo Jr. Daquipil"
                             url = "https://lemonypancakes.me"
-                            email = "jiboyjune@gmail.com"
+                            email = "contact@lemonypancakes.me"
                             roles = listOf("developer", "maintainer")
                         }
                     }
