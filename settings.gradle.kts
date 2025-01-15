@@ -11,5 +11,7 @@ include(
     "resourcemanagerhelper-v1_20_R1",
     "resourcemanagerhelper-v1_20_R2",
     "resourcemanagerhelper-v1_20_R3",
-    "resourcemanagerhelper-v1_21_R1"
+    "resourcemanagerhelper-v1_21_R1",
+    "resourcemanagerhelper-v1_21_R2",
+    "resourcemanagerhelper-v1_21_R3"
 )
