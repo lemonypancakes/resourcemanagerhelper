@@ -51,11 +51,11 @@ if (resources != null) {
 
 ---
 
-##Contributing
+## Contributing
 We welcome contributions!
 Feel free to open an issue or submit a pull request.
 
 ---
 
-##License
+## License
 ResourceManagerHelper is released under the GPL-3.0 License.
