@@ -4,7 +4,6 @@ plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.5"
     id("org.danilopianini.publish-on-central") version "8.0.1"
-    id("signing")
 }
 
 dependencies {
@@ -32,7 +31,6 @@ tasks {
 allprojects {
     apply(plugin = "java")
     apply(plugin = "org.danilopianini.publish-on-central")
-    apply(plugin = "signing")
 
     val major = 1
     val minor = 4
