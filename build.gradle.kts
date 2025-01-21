@@ -5,7 +5,6 @@ plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.5"
     id("com.vanniktech.maven.publish") version "0.30.0"
-    id("signing")
 }
 
 dependencies {
