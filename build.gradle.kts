@@ -1,10 +1,10 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.5"
-    id("com.vanniktech.maven.publish") version "0.30.0"
+    id("org.danilopianini.publish-on-central") version "8.0.1"
+    id("signing")
 }
 
 dependencies {
@@ -31,7 +31,8 @@ tasks {
 
 allprojects {
     apply(plugin = "java")
-    apply(plugin = "com.vanniktech.maven.publish")
+    apply(plugin = "org.danilopianini.publish-on-central")
+    apply(plugin = "signing")
 
     val major = 1
     val minor = 4
@@ -55,39 +56,45 @@ allprojects {
         maven("https://libraries.minecraft.net/")
     }
 
-    mavenPublishing {
-        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishing {
+        publications {
+            create<MavenPublication>("mavenJava") {
+                from(components["java"])
 
-        pom {
-            name = "ResourceManagerHelper"
-            description = "Gives access to Minecraft's resource manager."
-            url = "https://github.com/lemonypancakes/resourcemanagerhelper"
-            inceptionYear = "2023"
+                pom {
+                    name = "ResourceManagerHelper"
+                    description = "Gives access to Minecraft's resource manager."
+                    url = "https://github.com/lemonypancakes/resourcemanagerhelper"
+                    inceptionYear = "2023"
 
-            licenses {
-                license {
-                    name = "GNU General Public License, Version 3.0"
-                    url = "https://www.gnu.org/licenses/gpl-3.0.txt"
-                }
-            }
+                    licenses {
+                        license {
+                            name = "GNU General Public License, Version 3.0"
+                            url = "https://www.gnu.org/licenses/gpl-3.0.txt"
+                        }
+                    }
 
-            scm {
-                url = "https://github.com/lemonypancakes/${rootProject.name}"
-                connection = "scm:git://github.com:lemonypancakes/${rootProject.name}.git"
-                developerConnection = "scm:git://github.com:lemonypancakes/${rootProject.name}.git"
-            }
+                    scm {
+                        url = "https://github.com/lemonypancakes/${rootProject.name}"
+                        connection = "scm:git://github.com:lemonypancakes/${rootProject.name}.git"
+                        developerConnection = "scm:git://github.com:lemonypancakes/${rootProject.name}.git"
+                    }
 
-            developers {
-                developer {
-                    id = "lemonypancakes"
-                    name = "Teofilo Jr. Daquipil"
-                    url = "https://lemonypancakes.me"
-                    email = "contact@lemonypancakes.me"
-                    roles = listOf("developer", "maintainer")
+                    developers {
+                        developer {
+                            id = "lemonypancakes"
+                            name = "Teofilo Jr. Daquipil"
+                            url = "https://lemonypancakes.me"
+                            email = "contact@lemonypancakes.me"
+                            roles = listOf("developer", "maintainer")
+                        }
+                    }
                 }
             }
         }
+    }
 
-        signAllPublications()
+    signing {
+        useInMemoryPgpKeys(System.getenv("GPG_PRIVATE_KEY"), System.getenv("GPG_PASSPHRASE"))
     }
 }
