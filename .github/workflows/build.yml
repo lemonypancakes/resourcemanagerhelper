@@ -38,4 +38,4 @@ jobs:
           ORG_GRADLE_PROJECT_MAVENCENTRALUSERNAME: ${{ secrets.ORG_GRADLE_PROJECT_MAVENCENTRALUSERNAME }}
           ORG_GRADLE_PROJECT_MAVENCENTRALPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_MAVENCENTRALPASSWORD }}
         run: |
-          ./gradlew clean publish
+          ./gradlew clean publishAndReleaseToMavenCentral --no-configuration-cache
