@@ -35,7 +35,7 @@ allprojects {
     apply(plugin = "signing")
 
     val major = 1
-    val minor = 4
+    val minor = 5
     val patch = 0
     val isSnapshot = false
     val baseVersion = "$major.$minor.$patch"
