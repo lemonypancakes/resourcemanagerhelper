@@ -56,7 +56,7 @@ allprojects {
 
     publishing {
         publications {
-            withType<MavenPublication> {
+            create<MavenPublication>("mavenJava") {
                 pom {
                     name = "ResourceManagerHelper"
                     description = "Gives access to Minecraft's resource manager."
