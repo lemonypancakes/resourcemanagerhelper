@@ -58,9 +58,7 @@ allprojects {
 
     publishing {
         publications {
-            create<MavenPublication>("mavenJava") {
-                from(components["java"])
-
+            withType<MavenPublication> {
                 pom {
                     name = "ResourceManagerHelper"
                     description = "Gives access to Minecraft's resource manager."
@@ -96,6 +94,5 @@ allprojects {
 
     signing {
         useInMemoryPgpKeys(System.getenv("GPG_PRIVATE_KEY"), System.getenv("GPG_PASSPHRASE"))
-        sign(publishing.publications["mavenJava"])
     }
 }
