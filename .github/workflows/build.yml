@@ -3,8 +3,7 @@ name: build
 on:
   push:
     branches:
-      - main # For releases
-      - develop # For snapshots
+      - master
   workflow_dispatch: # Allow manual triggers
 
 jobs:
