@@ -28,15 +28,6 @@ jobs:
         run: |
           echo "$GPG_PRIVATE_KEY" | gpg --batch --import
           gpg --list-secret-keys
-
-      - name: Set Snapshot or Release
-        id: build-type
-        run: |
-          if [[ "${{ github.ref_name }}" == "develop" ]]; then
-            echo "SNAPSHOT=true" >> $GITHUB_ENV
-          else
-            echo "SNAPSHOT=false" >> $GITHUB_ENV
-          fi
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Publish to Maven Central
