@@ -26,7 +26,7 @@ jobs:
           ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEY }}
           ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYPASSWORD }}
         run: |
-          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+          echo "ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEY" | gpg --batch --import
           gpg --list-secret-keys
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
