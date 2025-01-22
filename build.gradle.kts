@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     id("java")
     id("com.gradleup.shadow") version "8.3.5"
-    id("org.danilopianini.publish-on-central") version "8.0.1"
+    id("maven-publish")
 }
 
 dependencies {
@@ -30,22 +30,19 @@ tasks {
 
 allprojects {
     apply(plugin = "java")
-    apply(plugin = "org.danilopianini.publish-on-central")
+    apply(plugin = "maven-publish")
 
-    val major = 1
-    val minor = 4
-    val patch = 0
-    val isSnapshot = false
-    val baseVersion = "$major.$minor.$patch"
+    val majorVersion = project.property("majorVersion") as String
+    val minorVersion = project.property("minorVersion") as String
+    val patchVersion = project.property("patchVersion") as String
+    val isSnapshot = project.property("isSnapshot").toString().toBoolean()
+    val baseVersion = "$majorVersion.$minorVersion.$patchVersion"
     group = "me.lemonypancakes.${rootProject.name}"
     version = if (isSnapshot) "$baseVersion-SNAPSHOT" else baseVersion
 
     java {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-
-        withSourcesJar()
-        withJavadocJar()
     }
 
     repositories {
@@ -58,42 +55,18 @@ allprojects {
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+            }
+        }
 
-                pom {
-                    name = "ResourceManagerHelper"
-                    description = "Gives access to Minecraft's resource manager."
-                    url = "https://github.com/lemonypancakes/resourcemanagerhelper"
-                    inceptionYear = "2023"
+        repositories {
+            maven {
+                url = uri("https://repo.codemc.io/repository/lemonypancakes")
 
-                    licenses {
-                        license {
-                            name = "GNU General Public License, Version 3.0"
-                            url = "https://www.gnu.org/licenses/gpl-3.0.txt"
-                        }
-                    }
-
-                    scm {
-                        url = "https://github.com/lemonypancakes/${rootProject.name}"
-                        connection = "scm:git://github.com:lemonypancakes/${rootProject.name}.git"
-                        developerConnection = "scm:git://github.com:lemonypancakes/${rootProject.name}.git"
-                    }
-
-                    developers {
-                        developer {
-                            id = "lemonypancakes"
-                            name = "Teofilo Jr. Daquipil"
-                            url = "https://lemonypancakes.me"
-                            email = "contact@lemonypancakes.me"
-                            roles = listOf("developer", "maintainer")
-                        }
-                    }
+                credentials {
+                    username = System.getenv("JENKINS_USERNAME")
+                    password = System.getenv("JENKINS_PASSWORD")
                 }
             }
         }
-    }
-
-    signing {
-        useInMemoryPgpKeys(System.getenv("GPG_PRIVATE_KEY"), System.getenv("GPG_PASSPHRASE"))
-        sign(publishing.publications["mavenJava"])
     }
 }
