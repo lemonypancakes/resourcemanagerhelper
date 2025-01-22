@@ -63,7 +63,7 @@ allprojects {
 
         repositories {
             maven {
-                url = uri("https://repo.codemc.io/repository/lemonypancakes")
+                url = uri("https://repo.codemc.io/repository/lemonypancakes/")
 
                 credentials {
                     username = System.getenv("JENKINS_USERNAME")
