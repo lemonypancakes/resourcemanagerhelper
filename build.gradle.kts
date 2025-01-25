@@ -35,10 +35,14 @@ allprojects {
     val majorVersion = project.property("majorVersion") as String
     val minorVersion = project.property("minorVersion") as String
     val patchVersion = project.property("patchVersion") as String
-    val isSnapshot = project.property("isSnapshot").toString().toBoolean()
     val baseVersion = "$majorVersion.$minorVersion.$patchVersion"
+    val isSnapshot = project.property("isSnapshot").toString().toBoolean()
+    val finalVersion = if (isSnapshot) "$baseVersion-SNAPSHOT" else baseVersion
+    val buildNumber = System.getenv("BUILD_NUMBER") ?: ""
+    val isJenkins = buildNumber.isNotEmpty()
+
     group = "me.lemonypancakes.${rootProject.name}"
-    version = if (isSnapshot) "$baseVersion-SNAPSHOT" else baseVersion
+    version = if (isJenkins) "$finalVersion-$buildNumber" else finalVersion
 
     java {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -58,6 +62,8 @@ allprojects {
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+
+                version = finalVersion
             }
         }
 
