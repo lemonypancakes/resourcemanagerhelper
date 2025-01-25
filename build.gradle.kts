@@ -42,7 +42,7 @@ allprojects {
     val isJenkins = buildNumber.isNotEmpty()
 
     group = "me.lemonypancakes.${rootProject.name}"
-    version = if (isJenkins) "$finalVersion-b$buildNumber" else finalVersion
+    version = if (isJenkins && isSnapshot) "$finalVersion-b$buildNumber" else finalVersion
 
     java {
         sourceCompatibility = JavaVersion.VERSION_21
