@@ -22,12 +22,6 @@ dependencies {
     implementation(project(":${rootProject.name}-v1_21_R3"))
 }
 
-tasks {
-    withType<ShadowJar> {
-        archiveClassifier = ""
-    }
-}
-
 allprojects {
     apply(plugin = "java")
     apply(plugin = "com.gradleup.shadow")
@@ -53,6 +47,12 @@ allprojects {
         mavenCentral()
         maven("https://repo.codemc.io/repository/nms/")
         maven("https://libraries.minecraft.net/")
+    }
+
+    tasks {
+        withType<ShadowJar> {
+            archiveClassifier = ""
+        }
     }
 
     publishing {
