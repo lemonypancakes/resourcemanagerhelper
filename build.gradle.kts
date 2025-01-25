@@ -30,6 +30,7 @@ tasks {
 
 allprojects {
     apply(plugin = "java")
+    apply(plugin = "com.gradleup.shadow")
     apply(plugin = "maven-publish")
 
     val majorVersion = project.property("majorVersion") as String
