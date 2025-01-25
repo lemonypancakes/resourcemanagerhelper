@@ -97,7 +97,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
-- **LemonyPancakes (Teo)** - *Initial work* - [LemonyPancakes](https://github.com/lemonypancakes)
+- **lemonypancakes** - *Initial work* - [lemonypancakes](https://github.com/lemonypancakes)
 
 See also the list of [contributors](https://github.com/lemonypancakes/resourcemanagerhelper/contributors) who participated in this project.
 
@@ -106,4 +106,3 @@ See also the list of [contributors](https://github.com/lemonypancakes/resourcema
 
 ## License
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
-```
