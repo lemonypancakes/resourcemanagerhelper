@@ -35,7 +35,7 @@ public final class ResourceManagerHelper {
                     nmsVersion = json.get(Bukkit.getBukkitVersion()).getAsString();
                 }
             }
-            Class<?> clazz = Class.forName("me.lemonypancakes.resourcemanagerhelper.impl." + nmsVersion + ".NMSResourceManager");
+            Class<?> clazz = Class.forName("me.lemonypancakes.resourcemanagerhelper.impl.v" + nmsVersion + ".NMSResourceManager");
 
             if (ResourceManager.class.isAssignableFrom(clazz)) {
                 ResourceManagerHelper.resourceManager = (ResourceManager) clazz.getConstructor().newInstance();
