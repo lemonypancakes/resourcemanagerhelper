@@ -33,10 +33,15 @@ dependencies {
     implementation(project(":${rootProject.name}-v1_21_R3"))
 }
 
+tasks {
+    shadowJar {
+        archiveClassifier = "s"
+    }
+}
+
 allprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
-    apply(plugin = "com.gradleup.shadow")
 
     group = "me.lemonypancakes.${rootProject.name}"
     version = if (isJenkins && isSnapshot) "$finalVersion-b$buildNumber" else finalVersion
@@ -82,10 +87,6 @@ allprojects {
                 expand("version" to version)
             }
         }
-
-        shadowJar {
-            archiveClassifier = ""
-        }
     }
 }
 
@@ -109,6 +110,10 @@ subprojects {
             inputTask.set(getByName<ShadowJar>("shadowJar"))
             version.set(mcVersion)
             action.set(RemapTask.Action.MOJANG_TO_SPIGOT)
+        }
+
+        assemble {
+            dependsOn("remap")
         }
     }
 }
