@@ -8,6 +8,15 @@ plugins {
     id("io.github.patrick.remapper") version "1.4.2"
 }
 
+val majorVersion = project.property("majorVersion") as String
+val minorVersion = project.property("minorVersion") as String
+val patchVersion = project.property("patchVersion") as String
+val baseVersion = "$majorVersion.$minorVersion.$patchVersion"
+val isSnapshot = project.property("isSnapshot").toString().toBoolean()
+val finalVersion = if (isSnapshot) "$baseVersion-SNAPSHOT" else baseVersion
+val buildNumber = System.getenv("BUILD_NUMBER") ?: ""
+val isJenkins = buildNumber.isNotEmpty()
+
 dependencies {
     implementation(project(":${rootProject.name}-api"))
     implementation(project(":${rootProject.name}-v1_17_R1"))
@@ -24,53 +33,10 @@ dependencies {
     implementation(project(":${rootProject.name}-v1_21_R3"))
 }
 
-subprojects {
-    apply(plugin = "java")
-    apply(plugin = "io.github.patrick.remapper")
-
-    val mcVersion: String by project
-
-    repositories {
-        mavenCentral()
-        maven("https://repo.codemc.io/repository/nms/")
-        maven("https://libraries.minecraft.net/")
-    }
-
-    dependencies {
-        if (project.name != "${rootProject.name}-api") {
-            compileOnly(project(":${rootProject.name}-api"))
-        }
-        compileOnly("org.spigotmc:spigot:$mcVersion-R0.1-SNAPSHOT:remapped-mojang")
-    }
-
-    tasks {
-        remap {
-            dependsOn("shadowJar")
-
-            inputTask.set(getByName<ShadowJar>("shadowJar"))
-            version.set(mcVersion)
-            action.set(RemapTask.Action.MOJANG_TO_SPIGOT)
-        }
-
-        assemble {
-            dependsOn("remap")
-        }
-    }
-}
-
 allprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
     apply(plugin = "com.gradleup.shadow")
-
-    val majorVersion = project.property("majorVersion") as String
-    val minorVersion = project.property("minorVersion") as String
-    val patchVersion = project.property("patchVersion") as String
-    val baseVersion = "$majorVersion.$minorVersion.$patchVersion"
-    val isSnapshot = project.property("isSnapshot").toString().toBoolean()
-    val finalVersion = if (isSnapshot) "$baseVersion-SNAPSHOT" else baseVersion
-    val buildNumber = System.getenv("BUILD_NUMBER") ?: ""
-    val isJenkins = buildNumber.isNotEmpty()
 
     group = "me.lemonypancakes.${rootProject.name}"
     version = if (isJenkins && isSnapshot) "$finalVersion-b$buildNumber" else finalVersion
@@ -81,6 +47,12 @@ allprojects {
 
         withJavadocJar()
         withSourcesJar()
+    }
+
+    repositories {
+        mavenCentral()
+        maven("https://repo.codemc.io/repository/nms/")
+        maven("https://libraries.minecraft.net/")
     }
 
     publishing {
@@ -113,6 +85,30 @@ allprojects {
 
         shadowJar {
             archiveClassifier = ""
+        }
+    }
+}
+
+subprojects {
+    apply(plugin = "java")
+    apply(plugin = "io.github.patrick.remapper")
+
+    val mcVersion: String by project
+
+    dependencies {
+        if (project.name != "${rootProject.name}-api") {
+            compileOnly(project(":${rootProject.name}-api"))
+        }
+        compileOnly("org.spigotmc:spigot:$mcVersion-R0.1-SNAPSHOT:remapped-mojang")
+    }
+
+    tasks {
+        remap {
+            dependsOn("shadowJar")
+
+            inputTask.set(getByName<ShadowJar>("shadowJar"))
+            version.set(mcVersion)
+            action.set(RemapTask.Action.MOJANG_TO_SPIGOT)
         }
     }
 }
