@@ -33,12 +33,6 @@ dependencies {
     implementation(project(":${rootProject.name}-v1_21_R3"))
 }
 
-tasks {
-    shadowJar {
-        archiveClassifier = "s"
-    }
-}
-
 allprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
@@ -46,18 +40,18 @@ allprojects {
     group = "me.lemonypancakes.${rootProject.name}"
     version = if (isJenkins && isSnapshot) "$finalVersion-b$buildNumber" else finalVersion
 
+    repositories {
+        mavenCentral()
+        maven("https://repo.codemc.io/repository/nms/")
+        maven("https://libraries.minecraft.net/")
+    }
+
     java {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
 
         withJavadocJar()
         withSourcesJar()
-    }
-
-    repositories {
-        mavenCentral()
-        maven("https://repo.codemc.io/repository/nms/")
-        maven("https://libraries.minecraft.net/")
     }
 
     publishing {
@@ -80,18 +74,9 @@ allprojects {
             }
         }
     }
-
-    tasks {
-        processResources {
-            eachFile {
-                expand("version" to version)
-            }
-        }
-    }
 }
 
 subprojects {
-    apply(plugin = "java")
     apply(plugin = "io.github.patrick.remapper")
 
     val mcVersion: String by project
@@ -104,16 +89,16 @@ subprojects {
     }
 
     tasks {
-        remap {
-            dependsOn("shadowJar")
-
-            inputTask.set(getByName<ShadowJar>("shadowJar"))
+        named<RemapTask>("remap") {
             version.set(mcVersion)
-            action.set(RemapTask.Action.MOJANG_TO_SPIGOT)
         }
+    }
+}
 
-        assemble {
-            dependsOn("remap")
-        }
+tasks {
+    named<ShadowJar>("shadowJar") {
+        dependsOn(subprojects.map { it.tasks.named("remap") })
+
+        archiveClassifier.set("")
     }
 }
