@@ -90,14 +90,21 @@ subprojects {
 
     tasks {
         withType<RemapTask> {
+            inputTask.set(jar)
             version.set(mcVersion)
         }
     }
 }
 
 tasks {
-    withType<ShadowJar> {
+    withType<RemapTask> {
         dependsOn(subprojects.map { it.tasks.withType<RemapTask>() })
+
+        isEnabled = false
+    }
+
+    withType<ShadowJar> {
+        dependsOn(withType<RemapTask>())
 
         archiveClassifier.set("")
     }
