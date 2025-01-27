@@ -8,9 +8,9 @@ plugins {
     id("io.github.patrick.remapper") version "1.4.2"
 }
 
-val majorVersion = project.property("majorVersion") as String
-val minorVersion = project.property("minorVersion") as String
-val patchVersion = project.property("patchVersion") as String
+val majorVersion: String by project
+val minorVersion: String by project
+val patchVersion: String by project
 val baseVersion = "$majorVersion.$minorVersion.$patchVersion"
 val isSnapshot = project.property("isSnapshot").toString().toBoolean()
 val finalVersion = if (isSnapshot) "$baseVersion-SNAPSHOT" else baseVersion
@@ -89,15 +89,15 @@ subprojects {
     }
 
     tasks {
-        named<RemapTask>("remap") {
+        withType<RemapTask> {
             version.set(mcVersion)
         }
     }
 }
 
 tasks {
-    named<ShadowJar>("shadowJar") {
-        dependsOn(subprojects.map { it.tasks.named("remap") })
+    withType<ShadowJar> {
+        dependsOn(subprojects.map { it.tasks.withType<RemapTask>() })
 
         archiveClassifier.set("")
     }
