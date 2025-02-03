@@ -4,7 +4,7 @@ import io.github.patrick.gradle.remapper.RemapTask
 plugins {
     id("java")
     id("maven-publish")
-    id("com.gradleup.shadow") version "8.3.5"
+    id("com.gradleup.shadow") version "8.3.6"
     id("io.github.patrick.remapper") version "1.4.2"
 }
 
