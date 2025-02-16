@@ -79,19 +79,19 @@ allprojects {
 subprojects {
     apply(plugin = "io.github.patrick.remapper")
 
-    val mcVersion: String by project
+    val minecraftVersion: String by project
 
     dependencies {
         if (project.name != "${rootProject.name}-api") {
             compileOnly(project(":${rootProject.name}-api"))
         }
-        compileOnly("org.spigotmc:spigot:$mcVersion-R0.1-SNAPSHOT:remapped-mojang")
+        compileOnly("org.spigotmc:spigot:$minecraftVersion-R0.1-SNAPSHOT:remapped-mojang")
     }
 
     tasks {
         withType<RemapTask> {
             inputTask.set(jar)
-            version.set(mcVersion)
+            version.set(minecraftVersion)
         }
     }
 }
