@@ -126,6 +126,10 @@ tasks {
         dependsOn(shadowJar)
     }
 
+    publish {
+        dependsOn(build)
+    }
+
     remap {
         isEnabled = false
     }
