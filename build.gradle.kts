@@ -1,11 +1,11 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import io.github.patrick.gradle.remapper.RemapTask
 
 plugins {
     id("java")
     id("maven-publish")
     id("com.gradleup.shadow") version "8.3.5"
     id("io.github.patrick.remapper") version "1.4.2"
+    id("com.diffplug.spotless") version "7.0.2"
 }
 
 val majorVersion: String by project
@@ -36,6 +36,7 @@ dependencies {
 allprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
+    apply(plugin = "com.diffplug.spotless")
 
     group = "me.lemonypancakes.${rootProject.name}"
     version = if (isJenkins && isSnapshot) "$finalVersion-b$buildNumber" else finalVersion
@@ -52,6 +53,12 @@ allprojects {
 
         withJavadocJar()
         withSourcesJar()
+    }
+
+    spotless {
+        java {
+            googleJavaFormat()
+        }
     }
 
     publishing {
@@ -78,34 +85,48 @@ allprojects {
 
 subprojects {
     apply(plugin = "io.github.patrick.remapper")
+    apply(plugin = "com.gradleup.shadow")
 
     val minecraftVersion: String by project
 
     dependencies {
-        if (project.name != "${rootProject.name}-api") {
-            compileOnly(project(":${rootProject.name}-api"))
-        }
+        if (project.name != "${rootProject.name}-api") compileOnly(project(":${rootProject.name}-api"))
         compileOnly("org.spigotmc:spigot:$minecraftVersion-R0.1-SNAPSHOT:remapped-mojang")
     }
 
     tasks {
-        withType<RemapTask> {
+        remap {
             inputTask.set(jar)
             version.set(minecraftVersion)
+        }
+
+        shadowJar {
+            dependsOn(remap)
+            archiveClassifier.set("remapped-mojang")
+        }
+
+        build {
+            dependsOn(shadowJar)
         }
     }
 }
 
 tasks {
-    withType<RemapTask> {
-        dependsOn(subprojects.map { it.tasks.withType<RemapTask>() })
-
-        isEnabled = false
+    register("remapped-mojang", ShadowJar::class) {
+        from(subprojects.map { it.tasks.jar.get().outputs.files })
+        archiveClassifier.set("remapped-mojang")
     }
 
-    withType<ShadowJar> {
-        dependsOn(withType<RemapTask>())
-
+    shadowJar {
+        dependsOn("remapped-mojang", subprojects.map { it.tasks.remap })
         archiveClassifier.set("")
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
+
+    remap {
+        isEnabled = false
     }
 }
