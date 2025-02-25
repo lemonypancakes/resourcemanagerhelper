@@ -113,6 +113,7 @@ subprojects {
 
 tasks {
     register("remapped-mojang", ShadowJar::class) {
+        dependsOn(subprojects.map { it.tasks.shadowJar })
         from(subprojects.map { it.tasks.jar.get().outputs.files })
         archiveClassifier.set("remapped-mojang")
     }
@@ -124,10 +125,6 @@ tasks {
 
     build {
         dependsOn(shadowJar)
-    }
-
-    publish {
-        dependsOn(build)
     }
 
     remap {
