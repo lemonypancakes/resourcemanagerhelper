@@ -1,11 +1,12 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import io.github.patrick.gradle.remapper.RemapTask
 
 plugins {
     id("java")
-    id("maven-publish")
-    id("com.gradleup.shadow") version "8.3.5"
-    id("io.github.patrick.remapper") version "1.4.2"
     id("com.diffplug.spotless") version "7.0.2"
+    id("io.github.patrick.remapper") version "1.4.2"
+    id("com.gradleup.shadow") version "8.3.5"
+    id("maven-publish")
 }
 
 val majorVersion: String by project
@@ -18,39 +19,31 @@ val buildNumber = System.getenv("BUILD_NUMBER") ?: ""
 val isJenkins = buildNumber.isNotEmpty()
 
 dependencies {
-    implementation(project(":${rootProject.name}-api"))
-    implementation(project(":${rootProject.name}-v1_17_R1"))
-    implementation(project(":${rootProject.name}-v1_18_R1"))
-    implementation(project(":${rootProject.name}-v1_18_R2"))
-    implementation(project(":${rootProject.name}-v1_19_R1"))
-    implementation(project(":${rootProject.name}-v1_19_R2"))
-    implementation(project(":${rootProject.name}-v1_19_R3"))
-    implementation(project(":${rootProject.name}-v1_20_R1"))
-    implementation(project(":${rootProject.name}-v1_20_R2"))
-    implementation(project(":${rootProject.name}-v1_20_R3"))
-    implementation(project(":${rootProject.name}-v1_21_R1"))
-    implementation(project(":${rootProject.name}-v1_21_R2"))
-    implementation(project(":${rootProject.name}-v1_21_R3"))
+    subprojects.forEach { implementation(project(":${it.name}")) }
 }
 
 allprojects {
     apply(plugin = "java")
-    apply(plugin = "maven-publish")
     apply(plugin = "com.diffplug.spotless")
+    apply(plugin = "io.github.patrick.remapper")
+    apply(plugin = "maven-publish")
 
     group = "me.lemonypancakes.${rootProject.name}"
     version = if (isJenkins && isSnapshot) "$finalVersion-b$buildNumber" else finalVersion
 
     repositories {
-        mavenCentral()
         maven("https://repo.codemc.io/repository/nms/")
         maven("https://libraries.minecraft.net/")
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly("org.jetbrains:annotations:26.0.2")
     }
 
     java {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-
         withJavadocJar()
         withSourcesJar()
     }
@@ -65,7 +58,6 @@ allprojects {
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
-
                 version = finalVersion
             }
         }
@@ -81,11 +73,16 @@ allprojects {
             }
         }
     }
+
+    tasks {
+        remap {
+            isEnabled = false
+        }
+    }
 }
 
 subprojects {
     apply(plugin = "io.github.patrick.remapper")
-    apply(plugin = "com.gradleup.shadow")
 
     val minecraftVersion: String by project
 
@@ -95,39 +92,42 @@ subprojects {
     }
 
     tasks {
-        remap {
+        val remapSpigotMapped = register<RemapTask>("remapSpigotMapped") {
             inputTask.set(jar)
             version.set(minecraftVersion)
+            action.set(RemapTask.Action.MOJANG_TO_SPIGOT)
+            archiveClassifier.set("spigot-mapped")
         }
 
-        shadowJar {
-            dependsOn(remap)
-            archiveClassifier.set("remapped-mojang")
+        val remapObfuscated = register<RemapTask>("remapObfuscated") {
+            inputTask.set(jar)
+            version.set(minecraftVersion)
+            action.set(RemapTask.Action.MOJANG_TO_OBF)
+            archiveClassifier.set("obfuscated")
         }
 
         build {
-            dependsOn(shadowJar)
+            dependsOn(remapSpigotMapped, remapObfuscated)
         }
     }
 }
 
 tasks {
-    register("remapped-mojang", ShadowJar::class) {
-        dependsOn(subprojects.map { it.tasks.shadowJar })
-        from(subprojects.map { it.tasks.jar.get().outputs.files })
-        archiveClassifier.set("remapped-mojang")
+    val shadowSpigotMapped = register<ShadowJar>("shadowSpigotMapped") {
+        from(subprojects.map { it.tasks.named<RemapTask>("remapSpigotMapped").get().outputs.files })
+        archiveClassifier.set("spigot-mapped")
+    }
+
+    val shadowObfuscated = register<ShadowJar>("shadowObfuscated") {
+        from(subprojects.map { it.tasks.named<RemapTask>("remapObfuscated").get().outputs.files })
+        archiveClassifier.set("obfuscated")
     }
 
     shadowJar {
-        dependsOn("remapped-mojang", subprojects.map { it.tasks.remap })
         archiveClassifier.set("")
     }
 
     build {
-        dependsOn(shadowJar)
-    }
-
-    remap {
-        isEnabled = false
+        dependsOn(shadowSpigotMapped, shadowObfuscated, shadowJar)
     }
 }
