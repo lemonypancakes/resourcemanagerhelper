@@ -1,7 +1,8 @@
 package me.lemonypancakes.resourcemanagerhelper.v1_21_R3;
 
-import javax.annotation.Nonnull;
 import me.lemonypancakes.resourcemanagerhelper.ResourceLocation;
+
+import javax.annotation.Nonnull;
 
 public class NMSResourceLocation implements ResourceLocation {
   @Nonnull private final net.minecraft.resources.ResourceLocation handle;

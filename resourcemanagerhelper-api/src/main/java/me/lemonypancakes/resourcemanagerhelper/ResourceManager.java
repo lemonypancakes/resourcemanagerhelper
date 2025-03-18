@@ -1,8 +1,8 @@
 package me.lemonypancakes.resourcemanagerhelper;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.function.Predicate;
-import javax.annotation.Nonnull;
 
 public interface ResourceManager {
   @Nonnull

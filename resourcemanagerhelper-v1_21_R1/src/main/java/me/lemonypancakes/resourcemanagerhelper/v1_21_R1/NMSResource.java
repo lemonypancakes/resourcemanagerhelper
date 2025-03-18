@@ -1,9 +1,10 @@
 package me.lemonypancakes.resourcemanagerhelper.v1_21_R1;
 
+import me.lemonypancakes.resourcemanagerhelper.Resource;
+
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.annotation.Nonnull;
-import me.lemonypancakes.resourcemanagerhelper.Resource;
 
 public class NMSResource implements Resource {
   @Nonnull private final net.minecraft.server.packs.resources.Resource handle;

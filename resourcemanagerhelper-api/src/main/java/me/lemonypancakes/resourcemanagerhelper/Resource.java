@@ -1,8 +1,8 @@
 package me.lemonypancakes.resourcemanagerhelper;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.annotation.Nonnull;
 
 public interface Resource {
   @Nonnull

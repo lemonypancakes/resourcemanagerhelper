@@ -1,15 +1,16 @@
 package me.lemonypancakes.resourcemanagerhelper.v1_21_R2;
 
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
 import me.lemonypancakes.resourcemanagerhelper.Resource;
 import me.lemonypancakes.resourcemanagerhelper.ResourceLocation;
 import me.lemonypancakes.resourcemanagerhelper.ResourceManager;
 import net.minecraft.server.dedicated.DedicatedServer;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_21_R2.CraftServer;
+
+import javax.annotation.Nonnull;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public final class NMSResourceManager implements ResourceManager {
   @Nonnull private final net.minecraft.server.packs.resources.ResourceManager handle;
