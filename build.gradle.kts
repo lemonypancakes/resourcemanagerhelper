@@ -3,23 +3,28 @@ import io.github.patrick.gradle.remapper.RemapTask
 
 plugins {
     id("java")
-    id("com.diffplug.spotless") version "7.0.2"
+    id("com.diffplug.spotless") version "8.10.4"
     id("io.github.patrick.remapper") version "1.4.2"
-    id("com.gradleup.shadow") version "8.3.6"
+    id("com.gradleup.shadow") version "9.6.1"
     id("maven-publish")
 }
 
-val majorVersion: String by project
-val minorVersion: String by project
-val patchVersion: String by project
+val majorVersion = project.property("majorVersion").toString()
+val minorVersion = project.property("minorVersion").toString()
+val patchVersion = project.property("patchVersion").toString()
+
 val baseVersion = "$majorVersion.$minorVersion.$patchVersion"
 val isSnapshot = project.property("isSnapshot").toString().toBoolean()
+
 val finalVersion = if (isSnapshot) "$baseVersion-SNAPSHOT" else baseVersion
+
 val buildNumber = System.getenv("BUILD_NUMBER") ?: ""
 val isJenkins = buildNumber.isNotEmpty()
 
 dependencies {
-    subprojects.forEach { implementation(project(":${it.name}")) }
+    subprojects.forEach {
+        implementation(project(":${it.name}"))
+    }
 }
 
 allprojects {
@@ -39,14 +44,15 @@ allprojects {
     }
 
     dependencies {
-        compileOnly("org.jetbrains:annotations:26.0.2")
+        compileOnly("org.jetbrains:annotations:26.1.0")
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-        withJavadocJar()
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(25))
+        }
         withSourcesJar()
+        withJavadocJar()
     }
 
     spotless {
