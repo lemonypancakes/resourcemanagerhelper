@@ -82,6 +82,11 @@ allprojects {
     }
 
     tasks {
+        compileJava {
+            options.encoding = "UTF-8"
+            options.release.set(25)
+        }
+
         remap {
             isEnabled = false
         }
@@ -91,7 +96,7 @@ allprojects {
 subprojects {
     apply(plugin = "io.github.patrick.remapper")
 
-    val minecraftVersion: String by project
+    val minecraftVersion = project.property("minecraftVersion").toString()
 
     dependencies {
         if (project.name != "${rootProject.name}-api") compileOnly(project(":${rootProject.name}-api"))
