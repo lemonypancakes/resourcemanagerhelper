@@ -3,7 +3,7 @@ import io.github.patrick.gradle.remapper.RemapTask
 
 plugins {
     id("java")
-    id("com.diffplug.spotless") version "8.10.4"
+    id("com.diffplug.spotless") version "8.11.0"
     id("io.github.patrick.remapper") version "1.4.2"
     id("com.gradleup.shadow") version "9.6.1"
     id("maven-publish")
